@@ -2,6 +2,8 @@ import os
 
 from bot import bot, app
 from handlers import start, user, admin
+print(bot.message_handlers)
+print(bot.callback_query_handlers)
 from config import BOT_TOKEN
 
 DOMAIN = os.getenv("RENDER_EXTERNAL_URL")
