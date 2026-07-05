@@ -4,9 +4,6 @@ from states import user_states
 from db import get_songs
 
 
-print("user.py imported")
-
-
 PERSIAN_TEXTS = {
     "about_us": "سلام 👋\n من محمدرضا ام و این ربات منه \n توی این ربات شما میتونین آهنگ هایی که من از قبل آپلود کردم رو گوش بدید و لذت ببرید"
 }
@@ -86,8 +83,12 @@ def handle_user_callback(call):
 
             caption = f"🎵 {title}\n👤 {performer}"
 
-            bot.send_message(chat_id, caption)
-            bot.send_audio(chat_id, file_id)
+            
+            try:
+                bot.send_audio(chat_id, file_id)
+                bot.send_message(chat_id, caption)
+            except Exception:
+                bot.send_message(chat_id,"❌ این آهنگ قابل ارسال نیست.")
 
         bot.send_message(
             chat_id,

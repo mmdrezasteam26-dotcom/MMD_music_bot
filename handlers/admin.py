@@ -103,35 +103,51 @@ def receive_song(message):
     duration = audio.duration
     file_id = audio.file_id
 
-    add_song(
-        title,
-        performer,
-        state["country"],
-        state["mood"],
-        file_id,
-        duration
-    )
+    result = add_song(
+            title,
+            performer,
+            state["country"],
+            state["mood"],
+            file_id,
+            duration
+            )
 
     admin_states.pop(chat_id, None)
 
-    bot.send_message(
-        chat_id,
-        "✅ آهنگ با موفقیت ذخیره شد.",
-        reply_markup=reply.admin_keyboard1()
-    )
+    if result:
+        bot.send_message(
+            chat_id,
+            "✅ آهنگ با موفقیت ذخیره شد.",
+            reply_markup=reply.admin_keyboard1()
+        )
+    else:
+        bot.send_message(
+            chat_id,
+            "اهنگ ذخیره نشد ❌",
+            reply_markup=reply.admin_keyboard1()
+        )
 
 
 @bot.callback_query_handler(func=lambda c: c.data.startswith("delete_"))
 def delete_song_callback(call):
-    song_id = int(call.data.split("_")[1])
+    if call.message.chat.id not in ADMIN_IDS:
+        bot.answer_callback_query(call.id, "دسترسی نداری")
+        return
+    
+    else:
+        
+        try:
+            song_id = int(call.data.split("_")[1])
+        except:
+            bot.answer_callback_query(call.id, "خطا ❌")
+        
+        delete_song(song_id)
 
-    delete_song(song_id)
+        bot.answer_callback_query(call.id, "✅ حذف شد")
 
-    bot.answer_callback_query(call.id, "✅ حذف شد")
+        bot.delete_message(
+            call.message.chat.id,
+            call.message.message_id
+        )
 
-    bot.delete_message(
-        call.message.chat.id,
-        call.message.message_id
-    )
-
-    admin_states.pop(call.message.chat.id, None)
+        admin_states.pop(call.message.chat.id, None)

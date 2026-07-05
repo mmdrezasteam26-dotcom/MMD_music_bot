@@ -2,8 +2,6 @@ from bot import bot
 from config import ADMIN_IDS
 from keyboards import reply
 
-print("Start.py imported")
-
 @bot.message_handler(commands=['start'])
 def start_handler(message):
     if message.chat.id not in ADMIN_IDS:
