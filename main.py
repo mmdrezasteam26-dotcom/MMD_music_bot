@@ -1,11 +1,6 @@
-import requests
-from bot import bot, app
+from bot import bot
 from handlers import start, user, admin
-from config import BOT_TOKEN
 
-URL = "https://mmd-music-bot.onrender.com"
+print("Bot started ...........")
 
-bot.remove_webhook()
-bot.set_webhook(url=f"{URL}/{BOT_TOKEN}")
-
-print("---- Bot Started ----")
+bot.infinity_polling(skip_pending=True)
