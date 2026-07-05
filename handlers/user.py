@@ -3,6 +3,10 @@ from keyboards import inline, reply
 from states import user_states
 from db import get_songs
 
+
+print("user.py imported")
+
+
 PERSIAN_TEXTS = {
     "about_us": "سلام 👋\n من محمدرضا ام و این ربات منه \n توی این ربات شما میتونین آهنگ هایی که من از قبل آپلود کردم رو گوش بدید و لذت ببرید"
 }
