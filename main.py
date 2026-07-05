@@ -1,20 +1,11 @@
-import os
-
+import requests
 from bot import bot, app
 from handlers import start, user, admin
-print(bot.message_handlers)
-print(bot.callback_query_handlers)
 from config import BOT_TOKEN
 
-DOMAIN = os.getenv("RENDER_EXTERNAL_URL")
+URL = "https://mmd-music-bot.onrender.com"
 
 bot.remove_webhook()
-bot.set_webhook(url=f"{DOMAIN}/{BOT_TOKEN}")
+bot.set_webhook(url=f"{URL}/{BOT_TOKEN}")
 
 print("---- Bot Started ----")
-
-if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 10000))
-    )
